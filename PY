@@ -1,0 +1,39 @@
+import tkinter as tk
+
+def calcular_probabilidade_final():
+    # Obter os valores do vetor de probabilidade de estado e da matriz de transição de estado
+    vetor_probabilidade = [float(x) for x in entrada_probabilidade.get().split(',')]
+    matriz_transicao = [[float(x) for x in row.split(',')] for row in entrada_transicao.get().split(';')]
+    
+    # Calcular os valores de probabilidade de estados finais
+    probabilidade_final = [sum(v * t for v, t in zip(vetor_probabilidade, col)) for col in zip(*matriz_transicao)]
+    
+    # Exibir os valores calculados na tela
+    resultado['text'] = str(probabilidade_final)
+
+# Criar a janela da interface
+janela = tk.Tk()
+janela.title("Cálculo de Probabilidade de Estados Finais")
+janela.geometry("400x200")
+
+# Criar rótulos e campos de entrada para vetor de probabilidade e matriz de transição
+rotulo_probabilidade = tk.Label(janela, text="Vetor de Probabilidade de Estado (separado por vírgulas):")
+rotulo_probabilidade.pack()
+entrada_probabilidade = tk.Entry(janela)
+entrada_probabilidade.pack()
+
+rotulo_transicao = tk.Label(janela, text="Matriz de Transição de Estado (separada por vírgulas e ponto-e-vírgula):")
+rotulo_transicao.pack()
+entrada_transicao = tk.Entry(janela)
+entrada_transicao.pack()
+
+# Criar botão para calcular a probabilidade de estados finais
+botao_calcular = tk.Button(janela, text="Calcular", command=calcular_probabilidade_final)
+botao_calcular.pack()
+
+# Exibir o resultado
+resultado = tk.Label(janela, text="")
+resultado.pack()
+
+# Iniciar a interface
+janela.mainloop()
